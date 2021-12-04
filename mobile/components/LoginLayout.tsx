@@ -4,22 +4,31 @@ import {
   StatusBar,
   StyleSheet,
   SafeAreaView,
+  ImageBackground,
 } from "react-native";
 import { StatusBar as StatusBarExpo } from "expo-status-bar";
 import React from "react";
 
-export const Layout = ({ children, backgroundColor }: any) => {
+export const LoginLayout = ({ children, backgroundColor }: any) => {
   const styles = StyleSheet.create({
     container: {
-      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      backgroundColor: !backgroundColor ? "#fff" : backgroundColor,
       height: "100%",
+    },
+    image: {
+      flex: 1,
+      justifyContent: "center",
     },
   });
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBarExpo style="dark" />
-      {children}
+      <StatusBarExpo style="light" />
+
+      <ImageBackground
+        source={require("../assets/plant.jpg")}
+        style={styles.image}
+      >
+        {children}
+      </ImageBackground>
     </SafeAreaView>
   );
 };

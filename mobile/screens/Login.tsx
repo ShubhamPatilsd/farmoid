@@ -1,5 +1,5 @@
-import { View, StyleSheet, Text } from "react-native";
-import { Layout } from "../components/Layout";
+import { View, StyleSheet, Text, Pressable } from "react-native";
+import { LoginLayout as Layout } from "../components/LoginLayout";
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +26,16 @@ export const LoginPage = () => {
       justifyContent: "center",
       alignItems: "center",
       height: "100%",
-      padding: 10,
+      padding: 20,
+    },
+    btn: {
+      borderRadius: 25,
+      backgroundColor: "white",
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 10,
+      paddingRight: 10,
+      width: "100%",
     },
   });
 
@@ -36,17 +45,43 @@ export const LoginPage = () => {
     return (
       <Layout backgroundColor="#52b788">
         <View style={styles.container}>
-          <Text style={[styles.h1]}>Greenable</Text>
-          <Text
-            style={{
-              fontFamily: "Poppins_400Regular",
-              color: "white",
-              fontSize: 20,
-              textAlign: "center",
-            }}
-          >
-            Welcome to the new way of keeping up with your plants.
-          </Text>
+          <View style={{ marginBottom: "10%" }}>
+            <Text style={[styles.h1]}>Greenable</Text>
+            <Text
+              style={{
+                fontFamily: "Poppins_400Regular",
+                color: "white",
+                fontSize: 20,
+              }}
+            >
+              Welcome to the new way of keeping up with your plants.
+            </Text>
+          </View>
+          <Pressable style={[styles.btn, { marginBottom: 10 }]}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: "#52b788",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Sign Up
+            </Text>
+          </Pressable>
+
+          <Pressable style={styles.btn}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: "#52b788",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Login
+            </Text>
+          </Pressable>
         </View>
       </Layout>
     );
