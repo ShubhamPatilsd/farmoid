@@ -11,8 +11,9 @@ datasource db {
 }
 
 model PlantInfo {
-  id   Int    @unique @default(autoincrement())
-  name String
-  min  Int
-  max  Int
+  id         Int    @unique @default(autoincrement())
+  name       String
+  query_name String
+  min        Int
+  max        Int
 }

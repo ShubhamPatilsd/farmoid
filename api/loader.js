@@ -11,6 +11,7 @@ async function main() {
       await prisma.plantInfo.create({
         data: {
           name: temp[0],
+          query_name: temp[0].toLowerCase(),
           min: parseInt(temp[1]),
           max: parseInt(temp[2]),
         },

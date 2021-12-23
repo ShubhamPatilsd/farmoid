@@ -7,7 +7,13 @@ export const FindMoisture = () => {
     const query = req.query.plant;
     const searchResult = await prisma.plantInfo.findMany({
       where: {
-        name: { contains: query.toString().toLowerCase() },
+        query_name: { contains: query.toString().toLowerCase() },
+      },
+      select: {
+        query_name: false,
+        name: true,
+        min: true,
+        max: true,
       },
     });
 
