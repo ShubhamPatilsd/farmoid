@@ -1,5 +1,6 @@
 import { View, StyleSheet, Text, Pressable } from "react-native";
-import { LoginLayout as Layout } from "../components/LoginLayout";
+import { LoginLayout as Layout } from "../../components/LoginLayout";
+// import { useNavigation } from "@react-navigation/core";
 
 import AppLoading from "expo-app-loading";
 import {
@@ -9,7 +10,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import React, { useState, useEffect } from "react";
 
-export const LoginPage = () => {
+export const StarterPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
@@ -57,26 +58,38 @@ export const LoginPage = () => {
               Welcome to the new way of keeping up with your plants.
             </Text>
           </View>
-          <Pressable style={[styles.btn, { marginBottom: 10 }]}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+            style={[styles.btn, { marginBottom: 10 }]}
+          >
             <Text
               style={{
                 fontSize: 24,
                 color: "#52b788",
                 fontWeight: "bold",
                 textAlign: "center",
+                fontFamily: "Poppins_700Bold",
               }}
             >
               Sign Up
             </Text>
           </Pressable>
 
-          <Pressable style={styles.btn}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+            style={styles.btn}
+          >
             <Text
               style={{
                 fontSize: 24,
                 color: "#52b788",
                 fontWeight: "bold",
                 textAlign: "center",
+                fontFamily: "Poppins_700Bold",
               }}
             >
               Login

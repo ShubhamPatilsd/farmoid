@@ -17,3 +17,10 @@ model PlantInfo {
   min        Int
   max        Int
 }
+
+model UserAuth {
+  id       String @unique @default(cuid())
+  email    String @unique
+  name     String
+  password String
+}

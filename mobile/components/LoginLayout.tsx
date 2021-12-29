@@ -6,8 +6,8 @@ import {
   SafeAreaView,
   ImageBackground,
 } from "react-native";
-import { StatusBar as StatusBarExpo } from "expo-status-bar";
 import React from "react";
+import { StatusBar as StatusBarExpo } from "expo-status-bar";
 
 export const LoginLayout = ({ children, backgroundColor }: any) => {
   const styles = StyleSheet.create({
