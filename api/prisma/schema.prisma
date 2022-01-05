@@ -19,13 +19,16 @@ model PlantInfo {
 }
 
 model User {
-  uid   String @unique
-  email String @unique
+  uid    String   @unique
+  email  String   @unique
+  Garden Garden[]
 }
 
 model Garden {
-  id    String  @unique @default(uuid())
-  Plant Plant[]
+  id      String  @unique @default(uuid())
+  Plant   Plant[]
+  User    User?   @relation(fields: [ownerId], references: [uid])
+  ownerId String
 }
 
 model Plant {
