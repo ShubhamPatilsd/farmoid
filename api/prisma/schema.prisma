@@ -22,3 +22,17 @@ model User {
   uid   String @unique
   email String @unique
 }
+
+model Garden {
+  id    String  @unique @default(uuid())
+  Plant Plant[]
+}
+
+model Plant {
+  id       String  @unique @default(uuid())
+  moisture Int
+  name     String
+  type     String
+  Garden   Garden? @relation(fields: [gardenId], references: [id])
+  gardenId String
+}
