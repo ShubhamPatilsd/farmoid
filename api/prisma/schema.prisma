@@ -18,9 +18,7 @@ model PlantInfo {
   max        Int
 }
 
-model UserAuth {
-  id       String @unique @default(cuid())
-  email    String @unique
-  name     String
-  password String
+model User {
+  uid   String @unique
+  email String @unique
 }

@@ -1,10 +1,10 @@
 import express from "express";
 import { baseRoutes } from "./routes/BaseRouter";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
+// import passport from "passport";
+// import { Strategy as LocalStrategy } from "passport-local";
 import { prisma } from "./database/db";
 // import initializePassport from "./passport-config";
-import * as argon2 from "argon2";
+// import * as argon2 from "argon2";
 const app = express();
 const PORT = process.env.PORT || 5000;
 import session from "express-session";
@@ -23,10 +23,6 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-//PassportJS stuff
-app.use(passport.initialize());
-app.use(passport.session());
-
 //log server requests & request method
 app.use(async (req, res, next) => {
   console.log(`[${req.method} - ${req.path}]`);
@@ -37,62 +33,14 @@ app.use(async (req, res, next) => {
 
 app.use(cors({ origin: true, credentials: true }));
 
-passport.serializeUser(async (user: any, cb: any) => {
-  const userData: any = user as any;
+// app.post(
+//   "/login",
 
-  cb(null, userData);
-});
-
-passport.deserializeUser<string>(async (id, done) => done(null, { id }));
-
-passport.use(
-  new LocalStrategy(async function (email, password, done) {
-    console.log("hi there");
-    // (async () => {
-    try {
-      const user = await prisma.userAuth.findUnique({
-        where: { email: email },
-      });
-
-      console.log(user);
-
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-
-      try {
-        if (!(await argon2.verify(user.password, password))) {
-          return done(null, false, { message: "Incorrect password" });
-        }
-      } catch (err) {
-        return done(err);
-      }
-
-      return done(null, user);
-    } catch (err) {
-      done(err);
-    }
-    // })();
-  })
-);
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    // res.redirect("/login");
-    console.log("no sign in");
-  }
-}
-
-app.post(
-  "/login",
-
-  passport.authenticate("local", {
-    failureRedirect: "/",
-    failureMessage: true,
-  })
-);
+//   passport.authenticate("local", {
+//     failureRedirect: "/",
+//     failureMessage: true,
+//   })
+// );
 
 // app.get("/")
 // passport.use(
@@ -174,7 +122,7 @@ app.post(
 //   res.json(req.user);
 // });
 
-// app.use("/", baseRoutes);
+app.use("/", baseRoutes);
 
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);

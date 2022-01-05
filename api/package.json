@@ -5,12 +5,10 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^3.5.0",
-    "argon2": "^0.28.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "passport": "^0.5.2",
-    "passport-local": "^1.0.0",
+    "firebase-admin": "^10.0.1",
     "prisma": "3.5.0"
   },
   "devDependencies": {
