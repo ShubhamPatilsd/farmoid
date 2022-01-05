@@ -21,7 +21,9 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
+import { api } from "../../util/api";
 
 export const RegisterPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
@@ -41,6 +43,32 @@ export const RegisterPage = ({ navigation }) => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+
+        firebaseAuth
+          .getAuth()
+          .currentUser.getIdToken(true)
+          .then((idToken) => {
+            // console.log(id)
+            // axios({
+            //   method: "POST",
+            //   url: "http://localhost:5000/auth/register",
+            //   data: {
+            //     authToken: idToken,
+            //   },
+            // });
+
+            api({
+              method: "POST",
+              url: "/auth/register",
+              data: {
+                authToken: idToken,
+              },
+            });
+          })
+          .catch((err) => {
+            // err stuff
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err.code, err.message);
