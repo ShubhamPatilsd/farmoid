@@ -16,9 +16,9 @@ import { auth, firebaseAuth } from "../../util/firebase";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
-  Poppins_400Regular,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+  Inter_400Regular,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
 
 import React, { useState, useEffect } from "react";
 // import { useNavigation } from "@react-navigation/core";
@@ -27,8 +27,8 @@ import { api } from "../../util/api";
 
 export const RegisterPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_700Bold,
+    Inter_400Regular,
+    Inter_900Black,
   });
 
   // const navigation = useNavigation();
@@ -79,7 +79,7 @@ export const RegisterPage = ({ navigation }) => {
     h1: {
       fontSize: 48,
       color: "#fff",
-      fontFamily: "Poppins_700Bold",
+      fontFamily: "Inter_900Black",
     },
 
     container: {
@@ -142,7 +142,7 @@ export const RegisterPage = ({ navigation }) => {
 
             {/* <Text
               style={{
-                fontFamily: "Poppins_400Regular",
+                fontFamily: "Inter_400Regular",
                 color: "white",
                 fontSize: 20,
               }}
@@ -178,7 +178,7 @@ export const RegisterPage = ({ navigation }) => {
                   fontSize: 25,
                   color: "#52b788",
                   textAlign: "center",
-                  fontFamily: "Poppins_700Bold",
+                  fontFamily: "Inter_900Black",
                 }}
               >
                 Let's Go

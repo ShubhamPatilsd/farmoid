@@ -16,17 +16,17 @@ import { auth, firebaseAuth } from "../../util/firebase";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
-  Poppins_400Regular,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+  Inter_400Regular,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
 
 import React, { useState, useEffect } from "react";
 // import { useNavigation } from "@react-navigation/core";
 
 export const LoginPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_700Bold,
+    Inter_400Regular,
+    Inter_900Black,
   });
 
   const [email, setEmail] = useState("");
@@ -49,7 +49,7 @@ export const LoginPage = ({ navigation }) => {
     h1: {
       fontSize: 48,
       color: "#fff",
-      fontFamily: "Poppins_700Bold",
+      fontFamily: "Inter_900Black",
     },
 
     container: {
@@ -139,7 +139,7 @@ export const LoginPage = ({ navigation }) => {
                   fontSize: 25,
                   color: "#52b788",
                   textAlign: "center",
-                  fontFamily: "Poppins_700Bold",
+                  fontFamily: "Inter_900Black",
                 }}
               >
                 Dive In

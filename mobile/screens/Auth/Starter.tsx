@@ -5,22 +5,22 @@ import { LoginLayout as Layout } from "../../components/LoginLayout";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
-  Poppins_400Regular,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+  Inter_400Regular,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
 import React, { useState, useEffect } from "react";
 
 export const StarterPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_700Bold,
+    Inter_400Regular,
+    Inter_900Black,
   });
 
   const styles = StyleSheet.create({
     h1: {
       fontSize: 48,
       color: "#fff",
-      fontFamily: "Poppins_700Bold",
+      fontFamily: "Inter_900Black",
     },
     container: {
       display: "flex",
@@ -50,7 +50,7 @@ export const StarterPage = ({ navigation }) => {
             <Text style={[styles.h1]}>Greenable</Text>
             <Text
               style={{
-                fontFamily: "Poppins_400Regular",
+                fontFamily: "Inter_400Regular",
                 color: "white",
                 fontSize: 20,
               }}
@@ -70,7 +70,7 @@ export const StarterPage = ({ navigation }) => {
                 color: "#52b788",
                 fontWeight: "bold",
                 textAlign: "center",
-                fontFamily: "Poppins_700Bold",
+                fontFamily: "Inter_900Black",
               }}
             >
               Sign Up
@@ -89,7 +89,7 @@ export const StarterPage = ({ navigation }) => {
                 color: "#52b788",
                 fontWeight: "bold",
                 textAlign: "center",
-                fontFamily: "Poppins_700Bold",
+                fontFamily: "Inter_900Black",
               }}
             >
               Login
