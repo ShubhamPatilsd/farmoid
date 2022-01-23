@@ -29,6 +29,7 @@ model Garden {
   Plant   Plant[]
   User    User?   @relation(fields: [ownerId], references: [uid])
   ownerId String
+  name    String  @unique
 }
 
 model Plant {
