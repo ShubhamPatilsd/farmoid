@@ -61,10 +61,12 @@ export const LoginPage = ({ navigation }) => {
     },
     btn: {
       borderRadius: 10,
-      backgroundColor: "white",
+      // backgroundColor: "white",
+      borderColor: "white",
+      borderWidth: 2,
       paddingHorizontal: 20,
       paddingVertical: 15,
-      //   width: "100%",
+      width: "100%",
     },
     input: {
       //   height: 60,
@@ -136,8 +138,8 @@ export const LoginPage = ({ navigation }) => {
             >
               <Text
                 style={{
-                  fontSize: 25,
-                  color: "#52b788",
+                  fontSize: 24,
+                  color: "#fff",
                   textAlign: "center",
                   fontFamily: "Inter_900Black",
                 }}

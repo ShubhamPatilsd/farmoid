@@ -8,30 +8,8 @@ import FirebaseAdmin from "firebase-admin";
 export const RegisterRoute = () => {
   const router = Router();
 
-  let firebaseConfig: string;
-
-  try {
-    firebaseConfig = JSON.parse(
-      fs.readFileSync(
-        path.join(process.cwd(), "firebase-config-settings.json"),
-        "utf-8"
-      )
-    );
-  } catch (err) {
-    console.log(err);
-    console.log(process.env.FIREBASE_CONFIG);
-    let c = JSON.parse(process.env.FIREBASE_CONFIG);
-    if (!c) throw err;
-    firebaseConfig = c;
-  }
-
-  FirebaseAdmin.initializeApp({
-    credential: FirebaseAdmin.credential.cert(firebaseConfig),
-  });
-
   router.post("/", async (req, res) => {
     const idToken = req.body.authToken;
-
     try {
       const user = await FirebaseAdmin.auth().verifyIdToken(idToken);
       const prismaResult = await prisma.user.findUnique({
@@ -46,7 +24,6 @@ export const RegisterRoute = () => {
         await prisma.user.create({
           data: {
             uid: user.uid,
-            email: user.email,
           },
         });
 

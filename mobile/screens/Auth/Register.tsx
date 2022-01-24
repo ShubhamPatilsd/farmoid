@@ -35,43 +35,43 @@ export const RegisterPage = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleSignUp = () => {
-    console.log("hi");
     firebaseAuth
       .createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
 
         firebaseAuth
-          .getAuth()
-          .currentUser.getIdToken(true)
-          .then((idToken) => {
-            // console.log(id)
-            // axios({
-            //   method: "POST",
-            //   url: "http://localhost:5000/auth/register",
-            //   data: {
-            //     authToken: idToken,
-            //   },
-            // });
-
-            api({
-              method: "POST",
-              url: "/auth/register",
-              data: {
-                authToken: idToken,
-              },
-            });
+          .updateProfile(auth.currentUser, {
+            displayName: name,
+          })
+          .then(() => {
+            // Profile updated!
+            firebaseAuth
+              .getAuth()
+              .currentUser.getIdToken(true)
+              .then((idToken) => {
+                api({
+                  method: "POST",
+                  url: "/auth/register",
+                  data: {
+                    authToken: idToken,
+                  },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
-            // err stuff
-            console.log(err);
+            console.log(err.code, err.message);
           });
       })
-      .catch((err) => {
-        console.log(err.code, err.message);
+      .catch((error) => {
+        // An error occurred
+        console.log(error);
       });
   };
 
@@ -91,10 +91,12 @@ export const RegisterPage = ({ navigation }) => {
     },
     btn: {
       borderRadius: 10,
-      backgroundColor: "white",
+      // backgroundColor: "white",
+      borderColor: "white",
+      borderWidth: 2,
       paddingHorizontal: 20,
       paddingVertical: 15,
-      //   width: "100%",
+      width: "100%",
     },
     input: {
       //   height: 60,
@@ -149,6 +151,7 @@ export const RegisterPage = ({ navigation }) => {
             >
               Welcome to the new way of keepsdfsdfing up with your plants.
             </Text> */}
+
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -169,14 +172,24 @@ export const RegisterPage = ({ navigation }) => {
               autoCorrect={false}
               onChangeText={(text) => setPassword(text)}
             />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Your Name (Or Nickname)"
+              value={name}
+              autoCompleteType="name"
+              keyboardType="default"
+              autoCorrect={false}
+              onChangeText={(text) => setName(text)}
+            />
             <Pressable
               style={[styles.btn, { marginTop: 10 }]}
               onPress={handleSignUp}
             >
               <Text
                 style={{
-                  fontSize: 25,
-                  color: "#52b788",
+                  fontSize: 24,
+                  color: "white",
                   textAlign: "center",
                   fontFamily: "Inter_900Black",
                 }}
@@ -188,7 +201,7 @@ export const RegisterPage = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("Starter");
               }}
-              style={{ marginTop: 10 }}
+              style={{ marginTop: 20 }}
             >
               <Text
                 style={{

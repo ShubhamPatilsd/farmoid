@@ -5,9 +5,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 import session from "express-session";
 import cors from "cors";
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import { firebaseAdminSetup } from "./util/FirebaseAdminSetup";
 
 firebaseAdminSetup();

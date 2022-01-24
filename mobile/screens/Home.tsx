@@ -17,6 +17,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import { GardenHomeTile } from "../components/GardenHomeTile";
+import { api } from "../util/api";
 // import { Paginator } from "../components/GardenPaginator";
 const { width, height } = Dimensions.get("screen");
 
@@ -64,29 +65,61 @@ export function HomeScreen() {
         },
       ]}
     >
-      {/* <Text style={{ fontSize: 36 }}>Hello, {user.email}</Text> */}
+      <Pressable
+        onPress={() => {
+          firebaseAuth
+            .getAuth()
+            .currentUser.getIdToken(true)
+            .then((idToken) => {
+              // console.log(id)
+              // axios({
+              //   method: "POST",
+              //   url: "http://localhost:5000/auth/register",
+              //   data: {
+              //     authToken: idToken,
+              //   },
+              // });
 
+              console.log("hi");
+
+              api({
+                method: "POST",
+                url: "/garden/create",
+                data: {
+                  authToken: idToken,
+                  name: "Bob thding",
+                },
+              });
+              // catch((err) => {
+              //   console.log(err);
+              // });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          // .catch((err) => {
+          //   // console.log(err);
+          // });
+        }}
+      >
+        <Text>Press</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={() => {
+          handleLogout();
+        }}
+      >
+        <Text>Hi</Text>
+      </Pressable>
       <FlatList
         data={data}
         keyExtractor={(_, index) => {
           return index.toString();
         }}
         horizontal
-        // style={{ height: height }}
-        // onMomentumScrollEnd={onScrollEnd}
         pagingEnabled
-        // scrollEventThrottle={1}
-        // onScrollBeginDrag={12}
         disableIntervalMomentum
-        // contentContainerStyle={{
-        //   alignItems: "center",
-        // }}
-        // onScroll={Animated.event(
-        //   [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-        //   {
-        //     useNativeDriver: true,
-        //   }
-        // )}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={5}
         snapToInterval={ITEM_SIZE}
@@ -108,11 +141,6 @@ export function HomeScreen() {
           );
         }}
       />
-      {/* <View style={{ display: "flex", alignItems: "center" }}>
-        <Paginator data={data} scrollX={scrollX} />
-      </View> */}
-
-      {/* <Button onPress={handleLogout} title="Logout" /> */}
     </SafeAreaView>
   );
 }

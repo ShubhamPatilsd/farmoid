@@ -29,13 +29,22 @@ export const StarterPage = ({ navigation }) => {
       height: "100%",
       padding: 20,
     },
+    // btn: {
+    //   borderRadius: 10,
+    //   backgroundColor: "white",
+    //   paddingTop: 10,
+    //   paddingBottom: 10,
+    //   paddingLeft: 10,
+    //   paddingRight: 10,
+    //   width: "100%",
+    // },
     btn: {
-      borderRadius: 25,
-      backgroundColor: "white",
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingLeft: 10,
-      paddingRight: 10,
+      borderRadius: 10,
+      // backgroundColor: "white",
+      borderColor: "white",
+      borderWidth: 2,
+      paddingHorizontal: 20,
+      paddingVertical: 15,
       width: "100%",
     },
   });
@@ -44,7 +53,7 @@ export const StarterPage = ({ navigation }) => {
     return <AppLoading />;
   } else {
     return (
-      <Layout backgroundColor="#52b788">
+      <Layout>
         <View style={styles.container}>
           <View style={{ marginBottom: "10%" }}>
             <Text style={[styles.h1]}>Greenable</Text>
@@ -62,13 +71,12 @@ export const StarterPage = ({ navigation }) => {
             onPress={() => {
               navigation.navigate("Register");
             }}
-            style={[styles.btn, { marginBottom: 10 }]}
+            style={[styles.btn, { marginBottom: 30 }]}
           >
             <Text
               style={{
                 fontSize: 24,
-                color: "#52b788",
-                fontWeight: "bold",
+                color: "#fff",
                 textAlign: "center",
                 fontFamily: "Inter_900Black",
               }}
@@ -86,8 +94,7 @@ export const StarterPage = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 24,
-                color: "#52b788",
-                fontWeight: "bold",
+                color: "#fff",
                 textAlign: "center",
                 fontFamily: "Inter_900Black",
               }}

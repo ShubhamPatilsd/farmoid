@@ -3,4 +3,4 @@ import { CreateGarden } from "./Create";
 
 export const garden = Router();
 
-garden.use("/register", CreateGarden());
+garden.use("/create", CreateGarden());

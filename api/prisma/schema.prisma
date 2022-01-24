@@ -20,7 +20,6 @@ model PlantInfo {
 
 model User {
   uid    String   @unique
-  email  String   @unique
   Garden Garden[]
 }
 
