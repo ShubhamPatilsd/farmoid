@@ -87,7 +87,7 @@ export function HomeScreen() {
                 url: "/garden/create",
                 data: {
                   authToken: idToken,
-                  name: "Bob thding",
+                  name: "Bob ting",
                 },
               });
               // catch((err) => {

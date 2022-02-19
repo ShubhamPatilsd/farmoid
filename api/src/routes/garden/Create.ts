@@ -18,7 +18,7 @@ export const CreateGarden = () => {
     });
 
     if (exists) {
-      console.log("Gardne exist");
+      console.log("Garden exist");
       res.status(409).send("Garden already exists");
     } else {
       const result = await prisma.garden.create({
