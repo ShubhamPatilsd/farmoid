@@ -84,7 +84,7 @@ export function HomeScreen() {
 
               api({
                 method: "POST",
-                url: "/garden/create",
+                url: "/garden/plant/create",
                 data: {
                   authToken: idToken,
                   name: "Bob ting",
