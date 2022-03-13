@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import React from "react";
-import { GardenHomeTile } from "../components/GardenHomeTile";
+import { PlantTile } from "../components/PlantTile";
 import { api } from "../util/api";
 // import { Paginator } from "../components/GardenPaginator";
 const { width, height } = Dimensions.get("screen");
@@ -31,37 +31,55 @@ export function HomeScreen() {
     "https://images.unsplash.com/photo-1559749284-7a6971fd798e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGdhcmRlbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
   ];
 
-  data = [
-    { key: "left-spacer", spacer: true },
-    ...data,
-    { key: "right-spacer", spacer: true },
-  ];
-
-  const ITEM_SIZE = width * 0.82;
-  const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
-
   const handleLogout = () => {
     firebaseAuth.signOut(auth);
     console.log("hi");
   };
 
   const [user, setUser] = useState<any>("Not Retrieved");
+  const [plants, setPlants] = useState<any>([]);
 
   useEffect(() => {
     firebaseAuth.onAuthStateChanged(auth, (userData) => {
       if (userData) {
         setUser(userData);
+
+        firebaseAuth
+          .getAuth()
+          .currentUser.getIdToken(true)
+          .then(async (idToken) => {
+            console.log(idToken);
+            const result = await api({
+              method: "POST",
+              url: "/garden/info",
+              data: {
+                authToken: idToken,
+              },
+            });
+
+            setPlants(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     });
+    //   }
+    // });
   }, []);
   return (
     <SafeAreaView
       style={[
         {
           paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          // paddingBottom:
+          //   Platform.OS === "android" ? StatusBar.currentHeight : 0,
           backgroundColor: "#EDF9F5",
           // flex: 1,
+          // height: height,
           height: height,
+
+          // padding: 20,
         },
       ]}
     >
@@ -117,30 +135,42 @@ export function HomeScreen() {
         keyExtractor={(_, index) => {
           return index.toString();
         }}
-        horizontal
-        pagingEnabled
-        disableIntervalMomentum
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={5}
-        snapToInterval={ITEM_SIZE}
-        decelerationRate={0.75}
+        // horizontal
+        // pagingEnabled
+        // disableIntervalMomentum
+        // showsHorizontalScrollIndicator={false}
+        // scrollEventThrottle={5}
+        // snapToInterval={ITEM_SIZE}
+        // decelerationRate={0.75}
         renderItem={({ item, index }) => {
-          if (item.spacer) {
-            return <View style={{ width: SPACER_ITEM_SIZE }} />;
-          }
-
           return (
             <View
-              style={{
-                width: ITEM_SIZE,
-                // height: height,
-              }}
+              style={
+                {
+                  // width: ITEM_SIZE,
+                  // height: height,
+                }
+              }
             >
-              <GardenHomeTile uri={item} name="Tom's Garden" />
+              <PlantTile uri={item} name="Tom's Garden" />
             </View>
           );
         }}
       />
+      <Pressable
+        style={{
+          borderRadius: 10,
+          backgroundColor: "black",
+          borderColor: "white",
+          marginBottom: 50,
+          borderWidth: 2,
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          width: "100%",
+        }}
+      >
+        <Text>Press</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }

@@ -12,14 +12,14 @@ import AppLoading from "expo-app-loading";
 const imageW = width;
 const imageH = imageW;
 
-interface GardenHomeTileProps {
+interface PlantTileProps {
   uri: string;
   name: string;
 }
 
 const paddingNum = 10;
 
-export function GardenHomeTile<GardenHomeTileProps>({ uri, name }) {
+export function PlantTile<PlantTileProps>({ uri, name }) {
   let [fontsLoaded] = useFonts({
     Inter_400Regular,
     Inter_700Bold,
@@ -41,7 +41,7 @@ export function GardenHomeTile<GardenHomeTileProps>({ uri, name }) {
         <Image
           source={{ uri }}
           style={{
-            width: width * 0.78,
+            width: width * 0.9,
             height: width * 0.5,
             // marginRight: ,
             resizeMode: "cover",
