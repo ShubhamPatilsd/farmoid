@@ -24,6 +24,7 @@ import React, { useState, useEffect } from "react";
 // import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import { api } from "../../util/api";
+import Toast from "react-native-toast-message";
 
 export const RegisterPage = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
@@ -39,7 +40,7 @@ export const RegisterPage = ({ navigation }) => {
 
   const handleSignUp = () => {
     firebaseAuth
-      .createUserWithEmailAndPassword(auth, email, password)
+      .createUserWithEmailAndPassword(auth, email.trim(), password)
       .then((userCredential) => {
         const user = userCredential.user;
 
@@ -71,6 +72,11 @@ export const RegisterPage = ({ navigation }) => {
       })
       .catch((error) => {
         // An error occurred
+        Toast.show({
+          type: "error",
+          text1: "Sign Up Error",
+          text2: error.message,
+        });
         console.log(error);
       });
   };

@@ -7,7 +7,7 @@ export const CreatePlant = () => {
   const router = Router();
 
   router.post("/", async (req, res) => {
-    const { authToken, name, gardenId, plantType } = req.body;
+    const { authToken, name, plantType } = req.body;
 
     const user = await FirebaseAdmin.auth().verifyIdToken(authToken);
 

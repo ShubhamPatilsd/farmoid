@@ -18,10 +18,11 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 import { PlantTile } from "../components/PlantTile";
 import { api } from "../util/api";
+import Icon from "react-native-vector-icons/Ionicons";
 // import { Paginator } from "../components/GardenPaginator";
 const { width, height } = Dimensions.get("screen");
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }) {
   let data: any[] = [
     "https://cdn.dribbble.com/users/3281732/screenshots/6727912/samji_illustrator.jpeg?compress=1&resize=1200x1200",
     "https://cdn.dribbble.com/users/3281732/screenshots/13661330/media/1d9d3cd01504fa3f5ae5016e5ec3a313.jpg?compress=1&resize=1200x1200",
@@ -48,16 +49,16 @@ export function HomeScreen() {
           .getAuth()
           .currentUser.getIdToken(true)
           .then(async (idToken) => {
-            console.log(idToken);
-            const result = await api({
+            // console.log(idToken);
+            const result: any = await api({
               method: "POST",
               url: "/garden/info",
               data: {
                 authToken: idToken,
               },
             });
-
-            setPlants(result);
+            // console.log(result.data);
+            setPlants(result.data.plants);
           })
           .catch((err) => {
             console.log(err);
@@ -84,43 +85,31 @@ export function HomeScreen() {
       ]}
     >
       <Pressable
+        style={{
+          position: "absolute",
+          bottom: height * 0.05,
+          right: width * 0.05,
+          zIndex: 999,
+          backgroundColor: "#0d9f61",
+          // padding: 5,
+          borderRadius: 100,
+          width: 65,
+          height: 65,
+          // display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         onPress={() => {
-          firebaseAuth
-            .getAuth()
-            .currentUser.getIdToken(true)
-            .then((idToken) => {
-              // console.log(id)
-              // axios({
-              //   method: "POST",
-              //   url: "http://localhost:5000/auth/register",
-              //   data: {
-              //     authToken: idToken,
-              //   },
-              // });
+          navigation.navigate("CreatePlant");
 
-              console.log("hi");
-
-              api({
-                method: "POST",
-                url: "/garden/plant/create",
-                data: {
-                  authToken: idToken,
-                  name: "Bob ting",
-                },
-              });
-              // catch((err) => {
-              //   console.log(err);
-              // });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
           // .catch((err) => {
           //   // console.log(err);
           // });
         }}
       >
-        <Text>Press</Text>
+        {/* <Text style={{ color: "white", fontSize: 40 }}>+</Text>
+         */}
+        <Icon name="ios-add-outline" size={30} color="white" />
       </Pressable>
 
       <Pressable
@@ -131,7 +120,7 @@ export function HomeScreen() {
         <Text>Hi</Text>
       </Pressable>
       <FlatList
-        data={data}
+        data={plants}
         keyExtractor={(_, index) => {
           return index.toString();
         }}
@@ -143,6 +132,7 @@ export function HomeScreen() {
         // snapToInterval={ITEM_SIZE}
         // decelerationRate={0.75}
         renderItem={({ item, index }) => {
+          console.log(item);
           return (
             <View
               style={
@@ -152,25 +142,15 @@ export function HomeScreen() {
                 }
               }
             >
-              <PlantTile uri={item} name="Tom's Garden" />
+              {/* <Text>{item.name}</Text> */}
+              <PlantTile
+                uri={`https://source.unsplash.com/1600x900/?${item.type} plant`}
+                name={item.name}
+              />
             </View>
           );
         }}
       />
-      <Pressable
-        style={{
-          borderRadius: 10,
-          backgroundColor: "black",
-          borderColor: "white",
-          marginBottom: 50,
-          borderWidth: 2,
-          paddingHorizontal: 20,
-          paddingVertical: 15,
-          width: "100%",
-        }}
-      >
-        <Text>Press</Text>
-      </Pressable>
     </SafeAreaView>
   );
 }

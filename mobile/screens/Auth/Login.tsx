@@ -21,6 +21,7 @@ import {
 } from "@expo-google-fonts/inter";
 
 import React, { useState, useEffect } from "react";
+import Toast from "react-native-toast-message";
 // import { useNavigation } from "@react-navigation/core";
 
 export const LoginPage = ({ navigation }) => {
@@ -35,12 +36,13 @@ export const LoginPage = ({ navigation }) => {
   const handleLogin = () => {
     // console.log("hi");
     firebaseAuth
-      .signInWithEmailAndPassword(auth, email, password)
+      .signInWithEmailAndPassword(auth, email.trim(), password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
       })
       .catch((err) => {
+        Toast.show({ type: "error", text1: "Login Error", text2: err.message });
         console.log(err.code, err.message);
       });
   };

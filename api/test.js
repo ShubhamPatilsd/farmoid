@@ -14,20 +14,20 @@ const fs = require("fs");
 // }
 // // main();
 
-// async function main() {
-//   let data = await prisma.plantInfo.findMany({
-//     select: {
-//       name: true,
-//     },
-//   });
-//   let test = [];
-//   data.filter((plant) => {
-//     // console.log(plant.name);
-//     test.push(plant.name);
-//   });
-//   console.log(test);
-//   fs.writeFileSync(JSON.stringify(test));
-// }
+async function main() {
+  let data = await prisma.plantInfo.findMany({
+    select: {
+      name: true,
+    },
+  });
+  let test = [];
+  data.filter((plant) => {
+    // console.log(plant.name);
+    test.push(plant.name);
+  });
+  console.log(test.sort());
+  fs.writeFileSync("pain.json", JSON.stringify(test));
+}
 
-// main();
+main();
 // console.log(data);
