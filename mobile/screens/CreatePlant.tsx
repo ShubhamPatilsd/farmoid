@@ -78,7 +78,7 @@ export function CreatePlantScreen({ navigation }) {
           },
         ]}
       >
-        <Text
+        {/* <Text
           style={{
             fontFamily: "Inter_900Black",
             fontSize: 36,
@@ -86,7 +86,7 @@ export function CreatePlantScreen({ navigation }) {
           }}
         >
           Create a Plant
-        </Text>
+        </Text> */}
         <TextInput
           style={styles.input}
           placeholder="What is your plant called?"
@@ -94,6 +94,7 @@ export function CreatePlantScreen({ navigation }) {
           keyboardType="default"
           autoCorrect={false}
           onChangeText={(text) => setPlantName(text)}
+          selectionColor="#0d9f61"
         />
         <View
           style={{

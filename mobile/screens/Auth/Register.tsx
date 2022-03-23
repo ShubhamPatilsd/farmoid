@@ -43,9 +43,9 @@ export const RegisterPage = ({ navigation }) => {
       .createUserWithEmailAndPassword(auth, email.trim(), password)
       .then((userCredential) => {
         const user = userCredential.user;
-
+        // console.log(user, name);
         firebaseAuth
-          .updateProfile(auth.currentUser, {
+          .updateProfile(user, {
             displayName: name,
           })
           .then(() => {
@@ -166,6 +166,7 @@ export const RegisterPage = ({ navigation }) => {
               keyboardType="email-address"
               autoCorrect={false}
               onChangeText={(text) => setEmail(text)}
+              selectionColor="#0d9f61"
             />
 
             <TextInput
@@ -177,6 +178,7 @@ export const RegisterPage = ({ navigation }) => {
               secureTextEntry={true}
               autoCorrect={false}
               onChangeText={(text) => setPassword(text)}
+              selectionColor="#0d9f61"
             />
 
             <TextInput
@@ -187,6 +189,7 @@ export const RegisterPage = ({ navigation }) => {
               keyboardType="default"
               autoCorrect={false}
               onChangeText={(text) => setName(text)}
+              selectionColor="#0d9f61"
             />
             <Pressable
               style={[styles.btn, { marginTop: 10 }]}

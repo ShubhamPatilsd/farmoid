@@ -19,10 +19,25 @@ import React from "react";
 import { PlantTile } from "../components/PlantTile";
 import { api } from "../util/api";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_700Bold,
+  Inter_600SemiBold,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
+import AppLoading from "expo-app-loading";
 // import { Paginator } from "../components/GardenPaginator";
 const { width, height } = Dimensions.get("screen");
 
 export function HomeScreen({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_700Bold,
+    Inter_600SemiBold,
+    Inter_900Black,
+  });
   let data: any[] = [
     "https://cdn.dribbble.com/users/3281732/screenshots/6727912/samji_illustrator.jpeg?compress=1&resize=1200x1200",
     "https://cdn.dribbble.com/users/3281732/screenshots/13661330/media/1d9d3cd01504fa3f5ae5016e5ec3a313.jpg?compress=1&resize=1200x1200",
@@ -39,6 +54,10 @@ export function HomeScreen({ navigation }) {
 
   const [user, setUser] = useState<any>("Not Retrieved");
   const [plants, setPlants] = useState<any>([]);
+
+  const tabBarHeight = useBottomTabBarHeight();
+
+  console.log("tabBarHeight", tabBarHeight);
 
   useEffect(() => {
     firebaseAuth.onAuthStateChanged(auth, (userData) => {
@@ -68,89 +87,100 @@ export function HomeScreen({ navigation }) {
     //   }
     // });
   }, []);
-  return (
-    <SafeAreaView
-      style={[
-        {
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-          // paddingBottom:
-          //   Platform.OS === "android" ? StatusBar.currentHeight : 0,
-          backgroundColor: "#EDF9F5",
-          // flex: 1,
-          // height: height,
-          height: height,
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <SafeAreaView
+        style={[
+          {
+            paddingTop:
+              Platform.OS === "android" ? StatusBar.currentHeight + 20 : 20,
+            paddingBottom: Math.ceil(tabBarHeight),
+            //   Platform.OS === "android" ? StatusBar.currentHeight : 0,
+            backgroundColor: "#EDF9F5",
+            // flex: 1,
+            // height: height,
+            height: height,
+            position: "relative",
+            paddingHorizontal: 20,
 
-          // padding: 20,
-        },
-      ]}
-    >
-      <Pressable
-        style={{
-          position: "absolute",
-          bottom: height * 0.05,
-          right: width * 0.05,
-          zIndex: 999,
-          backgroundColor: "#0d9f61",
-          // padding: 5,
-          borderRadius: 100,
-          width: 65,
-          height: 65,
-          // display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={() => {
-          navigation.navigate("CreatePlant");
-
-          // .catch((err) => {
-          //   // console.log(err);
-          // });
-        }}
+            // padding: 20,
+          },
+        ]}
       >
-        {/* <Text style={{ color: "white", fontSize: 40 }}>+</Text>
-         */}
-        <Icon name="ios-add-outline" size={30} color="white" />
-      </Pressable>
+        <Text
+          style={{
+            fontFamily: "Inter_900Black",
+            fontSize: 20,
+            marginBottom: 20,
+          }}
+        >
+          {user && user.displayName
+            ? `Hey, ${user.displayName}! 👋`
+            : "Hey! 👋"}
+        </Text>
+        <Pressable
+          style={{
+            position: "absolute",
+            bottom: Math.ceil(tabBarHeight) * 1.5,
+            right: width * 0.05,
+            zIndex: 999,
+            backgroundColor: "#0d9f61",
+            // padding: 5,
+            borderRadius: 100,
+            width: 65,
+            height: 65,
+            // display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => {
+            navigation.navigate("Create a Plant");
 
-      <Pressable
-        onPress={() => {
-          handleLogout();
-        }}
-      >
-        <Text>Hi</Text>
-      </Pressable>
-      <FlatList
-        data={plants}
-        keyExtractor={(_, index) => {
-          return index.toString();
-        }}
-        // horizontal
-        // pagingEnabled
-        // disableIntervalMomentum
-        // showsHorizontalScrollIndicator={false}
-        // scrollEventThrottle={5}
-        // snapToInterval={ITEM_SIZE}
-        // decelerationRate={0.75}
-        renderItem={({ item, index }) => {
-          console.log(item);
-          return (
-            <View
-              style={
-                {
-                  // width: ITEM_SIZE,
-                  // height: height,
+            // .catch((err) => {
+            //   // console.log(err);
+            // });
+          }}
+        >
+          {/* <Text style={{ color: "white", fontSize: 40 }}>+</Text>
+           */}
+          <Icon name="ios-add-outline" size={30} color="white" />
+        </Pressable>
+
+        <Pressable
+          onPress={() => {
+            handleLogout();
+          }}
+        >
+          <Text>Hi</Text>
+        </Pressable>
+        <FlatList
+          data={plants}
+          keyExtractor={(_, index) => {
+            return index.toString();
+          }}
+          renderItem={({ item, index }) => {
+            console.log(item);
+            return (
+              <View
+                style={
+                  {
+                    // width: ITEM_SIZE,
+                    // height: height,
+                  }
                 }
-              }
-            >
-              {/* <Text>{item.name}</Text> */}
-              <PlantTile
-                uri={`https://source.unsplash.com/1600x900/?${item.type} plant`}
-                name={item.name}
-              />
-            </View>
-          );
-        }}
-      />
-    </SafeAreaView>
-  );
+              >
+                {/* <Text>{item.name}</Text> */}
+                <PlantTile
+                  uri={`https://source.unsplash.com/1600x900/?${item.type} plant`}
+                  name={item.name}
+                />
+              </View>
+            );
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
 }

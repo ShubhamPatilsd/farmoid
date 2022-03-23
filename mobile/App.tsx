@@ -11,9 +11,14 @@ import { LoginPage } from "./screens/Auth/Login";
 import { HomeScreen } from "./screens/Home";
 import { CreatePlantScreen } from "./screens/CreatePlant";
 import Toast from "react-native-toast-message";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/Feather";
+import { SettingsPage } from "./screens/Settings";
+
 // import SplashScreen from "./components/SplashScreen";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [user, setUser] = useState<any>("Not Retrieved");
@@ -38,26 +43,61 @@ export default function App() {
   //   <SplashScreen />
   //) :
 
+  function Main() {
+    return (
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: "#0d9f61",
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" size={size} color={color} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Settings"
+          component={SettingsPage}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="settings" size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <>
       <NavigationContainer>
         <StatusBarExpo style="auto" />
 
         {user ? (
+          // <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
               name="Home"
-              component={HomeScreen}
+              component={Main}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="CreatePlant"
+              name="Create a Plant"
               component={CreatePlantScreen}
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
             />
-            {/* <HomeScreen /> */}
+            {/* <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="Settings" component={Settings} /> */}
           </Stack.Navigator>
         ) : (
+          // </NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
               name="Starter"

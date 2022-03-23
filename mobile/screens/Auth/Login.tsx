@@ -122,6 +122,7 @@ export const LoginPage = ({ navigation }) => {
               keyboardType="email-address"
               autoCorrect={false}
               onChangeText={(text) => setEmail(text)}
+              selectionColor="#0d9f61"
             />
 
             <TextInput
@@ -133,6 +134,7 @@ export const LoginPage = ({ navigation }) => {
               secureTextEntry={true}
               autoCorrect={false}
               onChangeText={(text) => setPassword(text)}
+              selectionColor="#0d9f61"
             />
             <Pressable
               style={[styles.btn, { marginTop: 10 }]}
