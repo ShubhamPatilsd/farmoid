@@ -30,6 +30,7 @@ import {
   Inter_900Black,
 } from "@expo-google-fonts/inter";
 import AppLoading from "expo-app-loading";
+import Toast from "react-native-toast-message";
 const { width, height } = Dimensions.get("screen");
 
 export function CreatePlantScreen({ navigation }) {
@@ -150,7 +151,19 @@ export function CreatePlantScreen({ navigation }) {
                         name: plantName,
                         plantType: selectedType,
                       },
-                    });
+                    })
+                      .then((res) => {
+                        console.log(res);
+                        navigation.navigate("Main");
+                      })
+                      .catch((err) => {
+                        // console.log(err);
+                        Toast.show({
+                          type: "error",
+                          text1: "Error",
+                          text2: err.message,
+                        });
+                      });
                     // catch((err) => {
                     //   console.log(err);
                     // });

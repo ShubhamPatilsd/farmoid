@@ -129,8 +129,6 @@ export function SettingsPage({ navigation }) {
         {updateButtonHidden && (
           <Pressable
             onPress={() => {
-              // navigation.navigate("Login");
-              // firebaseAuth.signOut(auth);
               firebaseAuth
                 .updateProfile(user, {
                   displayName: name,

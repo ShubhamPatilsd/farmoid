@@ -47,11 +47,6 @@ export function HomeScreen({ navigation }) {
     "https://images.unsplash.com/photo-1559749284-7a6971fd798e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGdhcmRlbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
   ];
 
-  const handleLogout = () => {
-    firebaseAuth.signOut(auth);
-    console.log("hi");
-  };
-
   const [user, setUser] = useState<any>("Not Retrieved");
   const [plants, setPlants] = useState<any>([]);
 
@@ -148,13 +143,6 @@ export function HomeScreen({ navigation }) {
           <Icon name="ios-add-outline" size={30} color="white" />
         </Pressable>
 
-        <Pressable
-          onPress={() => {
-            handleLogout();
-          }}
-        >
-          <Text>Hi</Text>
-        </Pressable>
         <FlatList
           data={plants}
           keyExtractor={(_, index) => {
@@ -174,7 +162,12 @@ export function HomeScreen({ navigation }) {
                 {/* <Text>{item.name}</Text> */}
                 <PlantTile
                   uri={`https://source.unsplash.com/1600x900/?${item.type} plant`}
-                  name={item.name}
+                  name={
+                    item.name.length > 15
+                      ? item.name.substring(0, 16) + "..."
+                      : item.name
+                  }
+                  moisture={item.moisture}
                 />
               </View>
             );
