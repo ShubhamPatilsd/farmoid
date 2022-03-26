@@ -52,9 +52,7 @@ export function HomeScreen({ navigation }) {
 
   const tabBarHeight = useBottomTabBarHeight();
 
-  console.log("tabBarHeight", tabBarHeight);
-
-  useEffect(() => {
+  const setupScreen = () => {
     firebaseAuth.onAuthStateChanged(auth, (userData) => {
       if (userData) {
         setUser(userData);
@@ -72,15 +70,24 @@ export function HomeScreen({ navigation }) {
               },
             });
             // console.log(result.data);
-            setPlants(result.data.plants);
+            setPlants(result.data.plants.reverse());
           })
           .catch((err) => {
             console.log(err);
           });
       }
     });
+  };
+
+  console.log("tabBarHeight", tabBarHeight);
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      setupScreen();
+    });
     //   }
     // });
+    setupScreen();
   }, []);
   if (!fontsLoaded) {
     return <AppLoading />;

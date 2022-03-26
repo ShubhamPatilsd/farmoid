@@ -79,7 +79,7 @@ export function PlantTile<PlantTileProps>({ uri, name, moisture }) {
               }}
             >
               {" "}
-              - {moisture}%
+              {moisture}%
             </Text>
           </View>
         </View>
