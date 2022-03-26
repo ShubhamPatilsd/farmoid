@@ -144,8 +144,8 @@ export const RegisterPage = ({ navigation }) => {
                 fontSize: 20,
               }}
             >
-              Welcome to Greenable! Take a step in helping your plants by
-              signing up below
+              Welcome to Farmoid! Take a step in helping your plants by signing
+              up below
             </Text>
 
             {/* <Text

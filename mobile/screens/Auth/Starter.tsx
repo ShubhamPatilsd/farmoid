@@ -56,7 +56,7 @@ export const StarterPage = ({ navigation }) => {
       <Layout>
         <View style={styles.container}>
           <View style={{ marginBottom: "10%" }}>
-            <Text style={[styles.h1]}>Greenable</Text>
+            <Text style={[styles.h1]}>Farmoid</Text>
             <Text
               style={{
                 fontFamily: "Inter_400Regular",
