@@ -54,6 +54,7 @@ export const RegisterPage = ({ navigation }) => {
               .getAuth()
               .currentUser.getIdToken(true)
               .then((idToken) => {
+                console.log("i am heereerer");
                 api({
                   method: "POST",
                   url: "/auth/register",

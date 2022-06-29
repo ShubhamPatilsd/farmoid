@@ -20,6 +20,8 @@ import { PlantTile } from "../components/PlantTile";
 import { api } from "../util/api";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
 import {
   useFonts,
   Inter_400Regular,
@@ -30,6 +32,14 @@ import {
 import AppLoading from "expo-app-loading";
 // import { Paginator } from "../components/GardenPaginator";
 const { width, height } = Dimensions.get("screen");
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export function HomeScreen({ navigation }) {
   let [fontsLoaded] = useFonts({
@@ -46,6 +56,20 @@ export function HomeScreen({ navigation }) {
     "https://images.unsplash.com/photo-1547389432-95b8f3c47f3c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Z2FyZGVufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1559749284-7a6971fd798e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGdhcmRlbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
   ];
+
+  async function registerForPushNotification() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status != "granted") {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      // finalStatus = status;
+    }
+    if (status !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+    return token;
+  }
 
   const [user, setUser] = useState<any>("Not Retrieved");
   const [plants, setPlants] = useState<any>([]);
@@ -85,6 +109,8 @@ export function HomeScreen({ navigation }) {
     navigation.addListener("focus", () => {
       setupScreen();
     });
+    registerForPushNotification().then((token) => console.log(token));
+    // }, []);
     //   }
     // });
     setupScreen();
